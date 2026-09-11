@@ -34,20 +34,20 @@
         }
 
         .admin-brand {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-.admin-logo {
-    width: 58px;
-    height: 58px;
-    object-fit: contain;
-    border-radius: 10px;
-    background: #ffffff;
-    padding: 4px;
-    display: block;
-}
+        .admin-logo {
+            width: 58px;
+            height: 58px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #ffffff;
+            padding: 4px;
+            display: block;
+        }
 
         .header h1 {
             margin: 0;
@@ -83,6 +83,95 @@
         }
 
         /* ===============================
+           QR SCANNER CARD
+        =============================== */
+
+        .qr-scanner-card {
+            background: linear-gradient(135deg, #111827, #1f2937);
+            color: white;
+
+            padding: 25px;
+            border-radius: 12px;
+
+            margin-bottom: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.10);
+        }
+
+        .qr-scanner-content {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .qr-scanner-icon {
+            width: 60px;
+            height: 60px;
+
+            background: white;
+            color: #111827;
+
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+
+            flex-shrink: 0;
+        }
+
+        .qr-scanner-text h2 {
+            margin: 0 0 7px;
+            font-size: 21px;
+        }
+
+        .qr-scanner-text p {
+            margin: 0;
+            color: #d1d5db;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .scan-qr-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            background: white;
+            color: #111827;
+
+            padding: 12px 20px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            white-space: nowrap;
+
+            transition: all 0.2s ease;
+        }
+
+        .scan-qr-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ===============================
            Statistics
         =============================== */
 
@@ -98,7 +187,8 @@
             padding: 25px;
             border-radius: 12px;
 
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.08);
         }
 
         .stat-card span {
@@ -121,7 +211,8 @@
             border-radius: 12px;
             margin-bottom: 25px;
 
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.08);
         }
 
         .section h2 {
@@ -285,6 +376,15 @@
                 align-items: flex-start;
                 gap: 15px;
             }
+
+            .qr-scanner-card {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .scan-qr-btn {
+                width: 100%;
+            }
         }
 
         @media (max-width: 500px) {
@@ -300,6 +400,24 @@
             .section {
                 padding: 15px;
             }
+
+            .qr-scanner-card {
+                padding: 20px;
+            }
+
+            .qr-scanner-content {
+                align-items: flex-start;
+            }
+
+            .qr-scanner-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 25px;
+            }
+
+            .qr-scanner-text h2 {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
@@ -311,34 +429,75 @@
          Header
     =============================== -->
 
-<header class="header">
+    <header class="header">
 
-    <div class="admin-brand">
+        <div class="admin-brand">
 
-        <img
-            src="assets/Logo.jpeg"
-            alt="Coders Era Logo"
-            class="admin-logo"
-        >
+            <img
+                src="assets/Logo.jpeg"
+                alt="Coders Era Logo"
+                class="admin-logo"
+            >
 
-        <div>
-            <h1>CODERS ERA</h1>
-            <p>Admin Dashboard</p>
+            <div>
+                <h1>CODERS ERA</h1>
+                <p>Admin Dashboard</p>
+            </div>
+
         </div>
 
-    </div>
-
-    <button
-        id="logout-button"
+        <button
+            id="logout-button"
             class="logout-btn"
-            type="button">
+            type="button"
+        >
             Logout
         </button>
 
     </header>
 
 
+    <!-- ===============================
+         Main
+    =============================== -->
+
     <main class="container">
+
+
+        <!-- ===============================
+             QR SCANNER
+        =============================== -->
+
+        <section class="qr-scanner-card">
+
+            <div class="qr-scanner-content">
+
+                <div class="qr-scanner-icon">
+                    📷
+                </div>
+
+                <div class="qr-scanner-text">
+
+                    <h2>Event Check-In</h2>
+
+                    <p>
+                        Scan participant QR tickets to verify
+                        and check them in instantly.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <a
+                href="scanner.html"
+                class="scan-qr-btn"
+            >
+                📷 Scan QR Code
+            </a>
+
+        </section>
 
 
         <!-- ===============================
@@ -349,7 +508,9 @@
 
             <div class="stat-card">
 
-                <span>Total Registrations</span>
+                <span>
+                    Total Registrations
+                </span>
 
                 <h2 id="total-registrations">
                     0
@@ -360,7 +521,9 @@
 
             <div class="stat-card">
 
-                <span>Checked In</span>
+                <span>
+                    Checked In
+                </span>
 
                 <h2 id="checked-in">
                     0
@@ -371,7 +534,9 @@
 
             <div class="stat-card">
 
-                <span>Not Checked In</span>
+                <span>
+                    Not Checked In
+                </span>
 
                 <h2 id="not-checked-in">
                     0
@@ -382,7 +547,9 @@
 
             <div class="stat-card">
 
-                <span>Attendance</span>
+                <span>
+                    Attendance
+                </span>
 
                 <h2 id="attendance-percentage">
                     0%
@@ -399,7 +566,10 @@
 
         <section class="section">
 
-            <h2>Attendance</h2>
+            <h2>
+                Attendance
+            </h2>
+
 
             <select id="event-select">
 
@@ -412,7 +582,8 @@
 
             <div
                 id="attendance-message"
-                class="message">
+                class="message"
+            >
             </div>
 
         </section>
@@ -424,7 +595,9 @@
 
         <section class="section">
 
-            <h2>All Registrations</h2>
+            <h2>
+                All Registrations
+            </h2>
 
 
             <!-- Search -->
@@ -434,7 +607,8 @@
                 <input
                     type="text"
                     id="registration-search"
-                    placeholder="Search by name, email, phone, ticket code or registration ID...">
+                    placeholder="Search by name, email, phone, ticket code or registration ID..."
+                >
 
 
                 <select id="status-filter">
@@ -466,23 +640,41 @@
 
                         <tr>
 
-                            <th>Name</th>
+                            <th>
+                                Name
+                            </th>
 
-                            <th>Email</th>
+                            <th>
+                                Email
+                            </th>
 
-                            <th>Phone</th>
+                            <th>
+                                Phone
+                            </th>
 
-                            <th>Event</th>
+                            <th>
+                                Event
+                            </th>
 
-                            <th>Registration ID</th>
+                            <th>
+                                Registration ID
+                            </th>
 
-                            <th>Ticket Code</th>
+                            <th>
+                                Ticket Code
+                            </th>
 
-                            <th>Status</th>
+                            <th>
+                                Status
+                            </th>
 
-                            <th>Check-in Time</th>
+                            <th>
+                                Check-in Time
+                            </th>
 
-                            <th>Registered At</th>
+                            <th>
+                                Registered At
+                            </th>
 
                         </tr>
 
@@ -511,13 +703,13 @@
             <button
                 id="refresh-dashboard"
                 class="refresh-btn"
-                type="button">
-
+                type="button"
+            >
                 🔄 Refresh Dashboard
-
             </button>
 
         </section>
+
 
     </main>
 
@@ -539,8 +731,10 @@
 
 
         /*
+        ==========================================
         If token does not exist,
         send user back to login.
+        ==========================================
         */
 
         if (!adminToken) {
@@ -596,7 +790,9 @@
 
 
             /*
+            ==========================================
             If token expired
+            ==========================================
             */
 
             if (
@@ -615,10 +811,12 @@
                     "admin-login.html";
 
                 return null;
+
             }
 
 
             return response;
+
         }
 
 
@@ -695,6 +893,7 @@
                     resetAttendance();
 
                     return;
+
                 }
 
 
@@ -724,7 +923,9 @@
 
 
                 /*
+                ==========================================
                 Load first event attendance
+                ==========================================
                 */
 
                 await loadAttendance(
@@ -992,7 +1193,9 @@
                     </tr>
                     `;
 
+
                 return;
+
             }
 
 
@@ -1027,6 +1230,7 @@
 
                     const statusHTML =
                         registration.checked_in === true
+
                             ?
 
                             `
