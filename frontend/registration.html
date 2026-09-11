@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Coders Era | Event Registration</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 5px;
+            color: #111827;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #111827;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 13px;
+            border: none;
+            border-radius: 7px;
+            background: #111827;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #message {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 7px;
+            display: none;
+        }
+
+        .success {
+            display: block !important;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .error {
+            display: block !important;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>CODERS ERA</h1>
+
+        <p class="subtitle">
+            Event Registration
+        </p>
+
+        <form id="registration-form">
+
+            <label for="event_id">
+                Select Event
+            </label>
+
+            <select id="event_id" required>
+                <option value="">
+                    Loading events...
+                </option>
+            </select>
+
+
+            <label for="name">
+                Full Name
+            </label>
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter your name"
+                required
+            >
+
+
+            <label for="email">
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+            >
+
+
+            <label for="phone">
+                Phone Number
+            </label>
+
+            <input
+                type="tel"
+                id="phone"
+                placeholder="Enter your phone number"
+                required
+            >
+
+
+            <button
+                type="submit"
+                id="register-button"
+            >
+                Register for Event
+            </button>
+
+        </form>
+
+        <div id="message"></div>
+
+    </div>
+
+
+    <script>
+
+        // =====================================
+        // API URL
+        // =====================================
+
+        const API_URL = "http://localhost:5000";
+
+
+        // =====================================
+        // LOAD EVENTS
+        // =====================================
+
+        async function loadEvents() {
+
+            const eventSelect =
+                document.getElementById("event_id");
+
+            try {
+
+                // IMPORTANT:
+                // Public registration page uses
+                // public events API.
+
+                const response = await fetch(
+                    `${API_URL}/api/registrations/events`
+                );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Failed to load events"
+                    );
+                }
+
+
+                eventSelect.innerHTML =
+                    '<option value="">Select an event</option>';
+
+
+                if (
+                    !data.events ||
+                    data.events.length === 0
+                ) {
+
+                    eventSelect.innerHTML =
+                        '<option value="">No events available</option>';
+
+                    return;
+                }
+
+
+                data.events.forEach(event => {
+
+                    const option =
+                        document.createElement("option");
+
+
+                    option.value =
+                        event.id;
+
+
+                    option.textContent =
+                        event.title;
+
+
+                    eventSelect.appendChild(
+                        option
+                    );
+
+                });
+
+
+            } catch (error) {
+
+                console.error(
+                    "Load events error:",
+                    error
+                );
+
+
+                eventSelect.innerHTML =
+                    '<option value="">Unable to load events</option>';
+            }
+        }
+
+
+        // =====================================
+        // REGISTRATION
+        // =====================================
+
+        document
+            .getElementById("registration-form")
+            .addEventListener(
+                "submit",
+                async function (event) {
+
+                    event.preventDefault();
+
+
+                    const message =
+                        document.getElementById(
+                            "message"
+                        );
+
+
+                    const registerButton =
+                        document.getElementById(
+                            "register-button"
+                        );
+
+
+                    const event_id =
+                        document.getElementById(
+                            "event_id"
+                        ).value;
+
+
+                    const name =
+                        document.getElementById(
+                            "name"
+                        ).value.trim();
+
+
+                    const email =
+                        document.getElementById(
+                            "email"
+                        ).value.trim();
+
+
+                    const phone =
+                        document.getElementById(
+                            "phone"
+                        ).value.trim();
+
+
+                    if (!event_id) {
+
+                        message.className =
+                            "error";
+
+                        message.textContent =
+                            "❌ Please select an event.";
+
+                        return;
+                    }
+
+
+                    message.className =
+                        "success";
+
+                    message.textContent =
+                        "⏳ Registering...";
+
+                    message.style.display =
+                        "block";
+
+
+                    registerButton.disabled =
+                        true;
+
+                    registerButton.textContent =
+                        "Registering...";
+
+
+                    try {
+
+                        // =====================================
+                        // CREATE REGISTRATION
+                        // =====================================
+
+                        const response =
+                            await fetch(
+                                `${API_URL}/api/registrations`,
+                                {
+                                    method: "POST",
+
+                                    headers: {
+                                        "Content-Type":
+                                            "application/json"
+                                    },
+
+                                    body: JSON.stringify({
+                                        event_id,
+                                        name,
+                                        email,
+                                        phone
+                                    })
+                                }
+                            );
+
+
+                        const data =
+                            await response.json();
+
+
+                        console.log(
+                            "Registration Response:",
+                            data
+                        );
+
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                data.message ||
+                                "Registration failed"
+                            );
+                        }
+
+
+                        // =====================================
+                        // SUCCESS
+                        // =====================================
+
+                        message.className =
+                            "success";
+
+
+                        message.innerHTML = `
+                            ✅ Registration Successful!
+                            <br><br>
+
+                            Registration ID:
+                            <strong>
+                                ${data.registration.registration_id}
+                            </strong>
+
+                            <br><br>
+
+                            Your ticket has been generated.
+                        `;
+
+
+                        // =====================================
+                        // REDIRECT TO TICKET
+                        // =====================================
+                        //
+                        // Your backend registration response
+                        // should contain ticket_code.
+                        //
+
+                        const ticketCode =
+                            data.ticket.ticket_code;
+
+                        if (ticketCode) {
+
+                            setTimeout(() => {
+
+                                window.location.href =
+                                    `ticket.html?ticketCode=${encodeURIComponent(
+                                        ticketCode
+                                    )}`;
+
+                            }, 1500);
+
+                        } else {
+
+                            console.warn(
+                                "Ticket code was not returned by backend."
+                            );
+
+                            document
+                                .getElementById(
+                                    "registration-form"
+                                )
+                                .reset();
+                        }
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Registration error:",
+                            error
+                        );
+
+
+                        message.className =
+                            "error";
+
+
+                        message.textContent =
+                            `❌ ${error.message}`;
+
+
+                    } finally {
+
+                        registerButton.disabled =
+                            false;
+
+                        registerButton.textContent =
+                            "Register for Event";
+                    }
+
+                }
+            );
+
+
+        // =====================================
+        // START
+        // =====================================
+
+        loadEvents();
+
+    </script>
+
+</body>
+
+</html>

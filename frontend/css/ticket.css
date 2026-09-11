@@ -1,0 +1,158 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #222;
+}
+
+.ticket-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+}
+
+.ticket-card {
+    width: 100%;
+    max-width: 850px;
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.ticket-header {
+    background: #111827;
+    color: white;
+    padding: 28px 35px;
+    text-align: center;
+}
+
+.ticket-header h1 {
+    font-size: 32px;
+    letter-spacing: 2px;
+}
+
+.ticket-header p {
+    margin-top: 6px;
+    font-size: 15px;
+    opacity: 0.8;
+}
+
+.event-section {
+    padding: 25px 35px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.event-section h2 {
+    font-size: 26px;
+    margin-bottom: 8px;
+}
+
+.event-section p {
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.ticket-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 30px 35px;
+}
+
+.participant-info {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.info-item span {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.info-item strong {
+    font-size: 15px;
+    word-break: break-word;
+}
+
+.qr-section {
+    width: 190px;
+    text-align: center;
+    padding-left: 25px;
+    border-left: 1px dashed #d1d5db;
+}
+
+.qr-section p {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.qr-section img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    border: 8px solid white;
+}
+
+.qr-section small {
+    display: block;
+    margin-top: 10px;
+    color: #16a34a;
+    font-weight: bold;
+}
+
+.ticket-footer {
+    padding: 18px 35px;
+    background: #f9fafb;
+    text-align: center;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+@media (max-width: 700px) {
+    .ticket-content {
+        flex-direction: column;
+    }
+
+    .participant-info {
+        grid-template-columns: 1fr;
+    }
+
+    .qr-section {
+        width: 100%;
+        border-left: none;
+        border-top: 1px dashed #d1d5db;
+        padding-left: 0;
+        padding-top: 25px;
+    }
+}
+
+@media print {
+    body {
+        background: white;
+    }
+
+    .ticket-page {
+        padding: 0;
+    }
+
+    .ticket-card {
+        box-shadow: none;
+    }
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Digital Ticket | Coders Era</title>
+
+    <link rel="stylesheet" href="css/ticket.css">
+</head>
+
+<body>
+
+    <div class="ticket-page">
+
+        <div class="ticket-card">
+
+            <!-- Header -->
+            <div class="ticket-header">
+                <h1>CODERS ERA</h1>
+                <p>Digital Event Ticket</p>
+            </div>
+
+            <!-- Event -->
+            <div class="event-section">
+                <h2 id="event-title">Loading event...</h2>
+                <p id="event-description"></p>
+            </div>
+
+            <!-- Ticket Information -->
+            <div class="ticket-content">
+
+                <div class="participant-info">
+
+                    <div class="info-item">
+                        <span>Name</span>
+                        <strong id="participant-name">Loading...</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Registration ID</span>
+                        <strong id="registration-id">Loading...</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Ticket Code</span>
+                        <strong id="ticket-code">Loading...</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Venue</span>
+                        <strong id="venue">Loading...</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Date</span>
+                        <strong id="event-date">Loading...</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Time</span>
+                        <strong id="event-time">Loading...</strong>
+                    </div>
+
+                </div>
+
+                <!-- QR Code -->
+                <div class="qr-section">
+
+                    <p>Scan to Verify</p>
+
+                    <img
+                        id="qr-code"
+                        src=""
+                        alt="Ticket QR Code"
+                    >
+
+                    <small id="ticket-status">
+                        Valid Ticket
+                    </small>
+
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="ticket-footer">
+                <p>Please show this QR code at the event entrance.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="js/ticket.js"></script>
+
+</body>
+</html>

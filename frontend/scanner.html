@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QR Scanner - Coders Era</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .scanner-container {
+            width: 90%;
+            max-width: 500px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+            color: #111827;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 25px;
+        }
+
+        #reader {
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .success {
+            display: block !important;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .error {
+            display: block !important;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .info {
+            display: block !important;
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 22px;
+            border: none;
+            border-radius: 8px;
+            background: #111827;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="scanner-container">
+
+        <h1>CODERS ERA</h1>
+
+        <p class="subtitle">
+            Scan Participant QR Code
+        </p>
+
+        <div id="reader"></div>
+
+        <div id="result"></div>
+
+    </div>
+
+
+    <!-- QR Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <!-- Our Scanner JavaScript -->
+    <script src="js/scanner.js"></script>
+
+</body>
+</html>

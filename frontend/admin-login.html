@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Coders Era - Admin Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: #f4f6f8;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+
+            background: #ffffff;
+
+            padding: 40px;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.10);
+        }
+
+        .logo {
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: 30px;
+
+            color: #111827;
+
+            margin-bottom: 8px;
+        }
+
+        .logo p {
+            font-size: 16px;
+
+            color: #6b7280;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            color: #111827;
+        }
+
+        .form-group input {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #111827;
+        }
+
+        #login-button {
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #111827;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            transition: opacity 0.2s;
+        }
+
+        #login-button:hover {
+            opacity: 0.9;
+        }
+
+        #login-button:disabled {
+            opacity: 0.6;
+
+            cursor: not-allowed;
+        }
+
+        #message {
+            margin-top: 18px;
+
+            padding: 10px;
+
+            border-radius: 6px;
+
+            text-align: center;
+
+            font-size: 14px;
+        }
+
+        #message:empty {
+            display: none;
+        }
+
+        #message.error {
+            background: #fee2e2;
+
+            color: #b91c1c;
+        }
+
+        #message.success {
+            background: #dcfce7;
+
+            color: #15803d;
+        }
+
+        .back-link {
+            display: block;
+
+            margin-top: 20px;
+
+            text-align: center;
+
+            color: #6b7280;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            color: #111827;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 20px;
+
+                padding: 30px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <!-- =====================================
+             HEADER
+        ====================================== -->
+
+        <div class="logo">
+
+            <h1>CODERS ERA</h1>
+
+            <p>Admin Login</p>
+
+        </div>
+
+
+        <!-- =====================================
+             LOGIN FORM
+        ====================================== -->
+
+        <form id="login-form">
+
+            <!-- Username -->
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter your username"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Password -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Login Button -->
+
+            <button
+                type="submit"
+                id="login-button"
+            >
+                Login
+            </button>
+
+
+            <!-- Message -->
+
+            <div id="message"></div>
+
+        </form>
+
+
+        <!-- =====================================
+             BACK TO REGISTRATION
+        ====================================== -->
+
+        <a
+            href="registration.html"
+            class="back-link"
+        >
+            ← Back to Registration
+        </a>
+
+    </div>
+
+
+    <!-- =====================================
+         ADMIN LOGIN JAVASCRIPT
+    ====================================== -->
+
+    <script src="js/admin-login.js"></script>
+
+</body>
+</html>
