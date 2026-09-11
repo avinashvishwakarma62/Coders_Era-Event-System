@@ -1,124 +1,311 @@
 const API_URL = "http://localhost:5000";
 
-async function loadTicket() {
-    const params = new URLSearchParams(window.location.search);
+document.addEventListener("DOMContentLoaded", async () => {
 
-    const ticketCode =
-        params.get("ticketCode") ||
-        params.get("ticket");
+    // =====================================
+    // GET TICKET CODE FROM URL
+    // =====================================
+
+    const params = new URLSearchParams(
+        window.location.search
+    );
+
+    const ticketCode = params.get("ticketCode");
+
+    console.log("Ticket Code:", ticketCode);
 
     if (!ticketCode) {
-        document.getElementById("event-title").textContent = "Ticket Not Found";
-        document.getElementById("event-description").textContent =
-            "Ticket code is missing from URL.";
+        showTicketError("No ticket code found in URL.");
         return;
     }
 
-    console.log("Loading ticket:", ticketCode);
-
     try {
+
+        // =====================================
+        // FETCH TICKET DETAILS
+        // =====================================
+
         const response = await fetch(
             `${API_URL}/api/tickets/${encodeURIComponent(ticketCode)}`
         );
 
         const data = await response.json();
 
-        console.log("API Response:", data);
+        console.log("Ticket API Response:", data);
 
         if (!response.ok) {
-            throw new Error(data.message || "Ticket not found");
+            throw new Error(
+                data.message || "Ticket not found"
+            );
         }
 
-        const ticket = data.ticket;
+        // =====================================
+        // GET TICKET OBJECT
+        // =====================================
 
-        document.getElementById("event-title").textContent =
-            ticket.event_title || "N/A";
+        const ticket = data.ticket || data;
 
-        document.getElementById("event-description").textContent =
-            ticket.description || "";
+        console.log("Ticket Data:", ticket);
 
-        document.getElementById("participant-name").textContent =
-            ticket.name || "N/A";
+        // =====================================
+        // PARTICIPANT DETAILS
+        // =====================================
 
-        document.getElementById("registration-id").textContent =
-            ticket.registration_code || "N/A";
+        setText(
+            "participant-name",
+            ticket.name
+        );
 
-        document.getElementById("ticket-code").textContent =
-            ticket.ticket_code || "N/A";
+        setText(
+            "roll-number",
+            ticket.roll_no
+        );
 
-        document.getElementById("venue").textContent =
-            ticket.venue || "N/A";
+        setText(
+            "college-email",
+            ticket.college_email || ticket.email
+        );
 
-        if (ticket.event_date) {
-            const date = new Date(ticket.event_date);
-            document.getElementById("event-date").textContent =
-                date.toLocaleDateString("en-IN");
+        setText(
+            "phone-number",
+            ticket.phone
+        );
+
+        setText(
+            "host-institution",
+            ticket.host_institution
+        );
+
+        setText(
+            "degree",
+            ticket.degree
+        );
+
+        setText(
+            "branch",
+            ticket.branch
+        );
+
+        setText(
+            "year-of-study",
+            ticket.year_of_study
+        );
+
+        // =====================================
+        // EVENT DETAILS
+        // =====================================
+
+        setText(
+            "event-name",
+            ticket.event_title || "Coders Era Workshop"
+        );
+
+        setText(
+            "event-description",
+            ticket.description || "Technical workshop for students"
+        );
+
+        setText(
+            "event-date",
+            formatDate(ticket.event_date)
+        );
+
+        // =====================================
+        // EVENT TIME
+        // =====================================
+
+        if (
+            ticket.start_time &&
+            ticket.end_time
+        ) {
+
+            setText(
+                "event-time",
+                `${ticket.start_time} - ${ticket.end_time}`
+            );
+
         } else {
-            document.getElementById("event-date").textContent = "N/A";
+
+            setText(
+                "event-time",
+                "—"
+            );
         }
 
-        let time = "N/A";
+        setText(
+            "event-venue",
+            ticket.venue
+        );
 
-        if (ticket.start_time) {
-            time = ticket.start_time.substring(0, 5);
+        // =====================================
+        // TICKET CODE
+        // =====================================
 
-            if (ticket.end_time) {
-                time += " - " + ticket.end_time.substring(0, 5);
+        setText(
+            "ticket-code",
+            ticket.ticket_code || ticketCode
+        );
+
+        // =====================================
+        // QR CODE
+        // =====================================
+
+        const qrImage =
+            document.getElementById("qr-code");
+
+        if (qrImage) {
+
+            if (ticket.qr_data) {
+
+                qrImage.src = ticket.qr_data;
+
+                qrImage.alt = "Ticket QR Code";
+
+            } else {
+
+                console.warn(
+                    "QR data not found"
+                );
+
+                qrImage.alt =
+                    "QR code unavailable";
             }
         }
 
-        document.getElementById("event-time").textContent = time;
+        // =====================================
+        // HIDE LOADING
+        // =====================================
 
-        // QR
-        const qr = document.getElementById("qr-code");
+        const loading =
+            document.getElementById("loading");
 
-        if (ticket.qr_data) {
-            qr.src = ticket.qr_data;
-            qr.style.display = "block";
-        } else {
-            qr.style.display = "none";
+        if (loading) {
+            loading.style.display = "none";
         }
 
-        // Status
-        const status = document.getElementById("ticket-status");
+        // =====================================
+        // SHOW TICKET
+        // =====================================
 
-        if (ticket.checked_in) {
-            status.textContent = "✅ Checked In";
-            status.className = "checked";
-        } else {
-            status.textContent = "🎟️ Valid Ticket";
-            status.className = "not-checked";
+        const ticketContainer =
+            document.getElementById(
+                "ticket-container"
+            );
+
+        if (ticketContainer) {
+
+            ticketContainer.style.display =
+                "block";
         }
-
-        console.log("✅ Ticket loaded successfully");
 
     } catch (error) {
-        console.error("❌ Ticket error:", error);
 
-        document.getElementById("event-title").textContent =
-            "Ticket Not Found";
+        console.error(
+            "Ticket loading error:",
+            error
+        );
 
-        document.getElementById("event-description").textContent =
-            error.message;
+        showTicketError(
+            error.message ||
+            "Unable to load ticket."
+        );
+    }
+});
 
-        document.getElementById("participant-name").textContent = "N/A";
-        document.getElementById("registration-id").textContent = "N/A";
-        document.getElementById("ticket-code").textContent = "N/A";
-        document.getElementById("venue").textContent = "N/A";
-        document.getElementById("event-date").textContent = "N/A";
-        document.getElementById("event-time").textContent = "N/A";
 
-        const qr = document.getElementById("qr-code");
+// =====================================
+// SET TEXT SAFELY
+// =====================================
 
-        if (qr) {
-            qr.style.display = "none";
-        }
+function setText(id, value) {
 
-        if (status) {
-            status.textContent = "❌ " + error.message;
-            status.className = "not-checked";
-        }
+    const element =
+        document.getElementById(id);
+
+    if (!element) {
+
+        console.warn(
+            `Element #${id} not found`
+        );
+
+        return;
+    }
+
+    if (
+        value !== undefined &&
+        value !== null &&
+        value !== ""
+    ) {
+
+        element.textContent = value;
+
+    } else {
+
+        element.textContent = "—";
     }
 }
 
-document.addEventListener("DOMContentLoaded", loadTicket);
+
+// =====================================
+// FORMAT DATE
+// =====================================
+
+function formatDate(date) {
+
+    if (!date) {
+        return "—";
+    }
+
+    const parsedDate =
+        new Date(date);
+
+    if (
+        isNaN(parsedDate.getTime())
+    ) {
+
+        return date;
+    }
+
+    return parsedDate.toLocaleDateString(
+        "en-IN",
+        {
+            day: "numeric",
+            month: "numeric",
+            year: "numeric"
+        }
+    );
+}
+
+
+// =====================================
+// SHOW ERROR
+// =====================================
+
+function showTicketError(message) {
+
+    const loading =
+        document.getElementById("loading");
+
+    if (loading) {
+        loading.style.display = "none";
+    }
+
+    const errorBox =
+        document.getElementById(
+            "ticket-error"
+        );
+
+    if (errorBox) {
+
+        errorBox.style.display =
+            "block";
+
+        errorBox.textContent =
+            message;
+    }
+
+    console.error(
+        "Ticket Error:",
+        message
+    );
+}

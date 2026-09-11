@@ -1,498 +1,791 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Coders Era | Event Registration</title>
+    <title>Coders Era - Event Registration</title>
 
     <style>
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* =========================
+           ADMIN LOGIN BUTTON
+        ========================== */
+
+        .admin-link {
+            position: fixed;
+            top: 20px;
+            right: 25px;
+            padding: 11px 18px;
+            background: #111827;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 1000;
+            transition: 0.2s ease;
+        }
+
+        .admin-link:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           PAGE
+        ========================== */
+
+        .page-container {
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 50px 20px;
         }
 
-        .container {
-            width: 90%;
-            max-width: 500px;
+        .registration-wrapper {
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
             background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
         }
 
-        h1 {
+        /* =========================
+           HEADER
+        ========================== */
+
+        .header {
             text-align: center;
-            margin-bottom: 5px;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
             color: #111827;
         }
 
-        .subtitle {
-            text-align: center;
+        .header p {
             color: #6b7280;
-            margin-bottom: 25px;
+            font-size: 15px;
+        }
+
+        /* =========================
+           EVENT CARD
+        ========================== */
+
+        .event-card {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .event-card h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #111827;
+        }
+
+        .event-card p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           FORM
+        ========================== */
+
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
         }
 
         label {
-            display: block;
-            margin-top: 15px;
-            margin-bottom: 6px;
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 7px;
+            color: #374151;
+        }
+
+        label span {
+            color: #dc2626;
         }
 
         input,
         select {
             width: 100%;
-            padding: 12px;
+            padding: 12px 14px;
             border: 1px solid #d1d5db;
-            border-radius: 7px;
-            font-size: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s ease;
+            background: white;
         }
 
         input:focus,
         select:focus {
-            outline: none;
-            border-color: #111827;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
-        button {
+        input::placeholder {
+            color: #9ca3af;
+        }
+
+        /* =========================
+           SUBMIT
+        ========================== */
+
+        .submit-section {
+            margin-top: 30px;
+        }
+
+        .submit-btn {
             width: 100%;
-            margin-top: 25px;
-            padding: 13px;
+            padding: 14px;
             border: none;
-            border-radius: 7px;
-            background: #111827;
+            border-radius: 9px;
+            background: #2563eb;
             color: white;
             font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
+            transition: 0.2s ease;
         }
 
-        button:hover {
-            opacity: 0.9;
+        .submit-btn:hover {
+            background: #1d4ed8;
         }
 
-        button:disabled {
-            opacity: 0.6;
+        .submit-btn:disabled {
+            background: #9ca3af;
             cursor: not-allowed;
         }
+
+        /* =========================
+           MESSAGE
+        ========================== */
 
         #message {
             margin-top: 20px;
             padding: 12px;
-            border-radius: 7px;
+            border-radius: 8px;
             display: none;
+            text-align: center;
+            font-size: 14px;
         }
 
-        .success {
-            display: block !important;
+        #message.success {
+            display: block;
             background: #dcfce7;
             color: #166534;
         }
 
-        .error {
-            display: block !important;
+        #message.error {
+            display: block;
             background: #fee2e2;
             color: #991b1b;
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 700px) {
+
+            .registration-wrapper {
+                padding: 25px 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: auto;
+            }
+
+            .header h1 {
+                font-size: 25px;
+            }
+
+            .admin-link {
+                top: 12px;
+                right: 12px;
+                padding: 9px 13px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
+    <!-- =========================
+         ADMIN LOGIN
+    ========================== -->
 
-        <h1>CODERS ERA</h1>
-
-        <p class="subtitle">
-            Event Registration
-        </p>
-
-        <form id="registration-form">
-
-            <label for="event_id">
-                Select Event
-            </label>
-
-            <select id="event_id" required>
-                <option value="">
-                    Loading events...
-                </option>
-            </select>
+    <a
+        href="admin-login.html"
+        class="admin-link"
+    >
+        🔐 Admin Login
+    </a>
 
 
-            <label for="name">
-                Full Name
-            </label>
+    <!-- =========================
+         PAGE
+    ========================== -->
 
-            <input
-                type="text"
-                id="name"
-                placeholder="Enter your name"
-                required
-            >
+    <div class="page-container">
+
+        <div class="registration-wrapper">
 
 
-            <label for="email">
-                Email
-            </label>
+            <!-- =========================
+                 HEADER
+            ========================== -->
 
-            <input
-                type="email"
-                id="email"
-                placeholder="Enter your email"
-                required
-            >
+            <div class="header">
+
+                <img
+                    src="assets/Logo.jpeg"
+                    alt="Coders Era Logo"
+                    class="logo"
+                >
+
+                <h1>
+                    Coders Era Event Registration
+                </h1>
+
+                <p>
+                    Register for the upcoming Coders Era Workshop
+                </p>
+
+            </div>
 
 
-            <label for="phone">
-                Phone Number
-            </label>
+            <!-- =========================
+                 EVENT
+            ========================== -->
 
-            <input
-                type="tel"
-                id="phone"
-                placeholder="Enter your phone number"
-                required
-            >
+            <div class="event-card">
+
+                <h2 id="event-title">
+                    Coders Era Workshop
+                </h2>
+
+                <p id="event-description">
+                    Technical workshop for students
+                </p>
+
+            </div>
 
 
-            <button
-                type="submit"
-                id="register-button"
-            >
-                Register for Event
-            </button>
+            <!-- =========================
+                 REGISTRATION FORM
+            ========================== -->
 
-        </form>
+            <form id="registration-form">
 
-        <div id="message"></div>
+
+                <h2 class="section-title">
+                    Participant Information
+                </h2>
+
+
+                <div class="form-grid">
+
+
+                    <!-- FULL NAME -->
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Full Name <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- ROLL NUMBER -->
+
+                    <div class="form-group">
+
+                        <label for="roll_no">
+                            Roll Number <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="roll_no"
+                            name="roll_no"
+                            placeholder="Enter your roll number"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- COLLEGE EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="college_email">
+                            Official College Email <span>*</span>
+                        </label>
+
+                        <input
+                            type="email"
+                            id="college_email"
+                            name="college_email"
+                            placeholder="example@college.edu"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone Number <span>*</span>
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="Enter phone number"
+                            pattern="[0-9]{10}"
+                            maxlength="10"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- HOST INSTITUTION -->
+
+                    <div class="form-group full-width">
+
+                        <label for="host_institution">
+                            Host Institution / College <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="host_institution"
+                            name="host_institution"
+                            placeholder="Enter your college/institution name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- DEGREE -->
+
+                    <div class="form-group">
+
+                        <label for="degree">
+                            Degree <span>*</span>
+                        </label>
+
+                        <select
+                            id="degree"
+                            name="degree"
+                            required
+                        >
+
+                            <option value="">
+                                Select Degree
+                            </option>
+
+                            <option value="B.Tech">
+                                B.Tech
+                            </option>
+
+                            <option value="B.E">
+                                B.E
+                            </option>
+
+                            <option value="BCA">
+                                BCA
+                            </option>
+
+                            <option value="B.Sc">
+                                B.Sc
+                            </option>
+
+                            <option value="M.Tech">
+                                M.Tech
+                            </option>
+
+                            <option value="MCA">
+                                MCA
+                            </option>
+
+                            <option value="M.Sc">
+                                M.Sc
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- BRANCH -->
+
+                    <div class="form-group">
+
+                        <label for="branch">
+                            Branch / Specialization <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="branch"
+                            name="branch"
+                            placeholder="e.g. Computer Science"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- YEAR OF STUDY -->
+
+                    <div class="form-group">
+
+                        <label for="year_of_study">
+                            Year of Study <span>*</span>
+                        </label>
+
+                        <select
+                            id="year_of_study"
+                            name="year_of_study"
+                            required
+                        >
+
+                            <option value="">
+                                Select Year
+                            </option>
+
+                            <option value="1st Year">
+                                1st Year
+                            </option>
+
+                            <option value="2nd Year">
+                                2nd Year
+                            </option>
+
+                            <option value="3rd Year">
+                                3rd Year
+                            </option>
+
+                            <option value="4th Year">
+                                4th Year
+                            </option>
+
+                            <option value="Postgraduate">
+                                Postgraduate
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =========================
+                     SUBMIT
+                ========================== -->
+
+                <div class="submit-section">
+
+                    <button
+                        type="submit"
+                        class="submit-btn"
+                        id="submit-btn"
+                    >
+                        Register for Event
+                    </button>
+
+                </div>
+
+
+                <!-- MESSAGE -->
+
+                <div id="message"></div>
+
+
+            </form>
+
+
+            <!-- =========================
+                 FOOTER
+            ========================== -->
+
+            <div class="footer">
+
+                © 2026 Coders Era. All rights reserved.
+
+            </div>
+
+
+        </div>
 
     </div>
 
 
-    <script>
+    <!-- =========================
+         REGISTRATION JAVASCRIPT
+    ========================== -->
 
-        // =====================================
-        // API URL
-        // =====================================
+    <script>
 
         const API_URL = "http://localhost:5000";
 
+        const registrationForm =
+            document.getElementById("registration-form");
 
-        // =====================================
-        // LOAD EVENTS
-        // =====================================
+        const message =
+            document.getElementById("message");
 
-        async function loadEvents() {
-
-            const eventSelect =
-                document.getElementById("event_id");
-
-            try {
-
-                // IMPORTANT:
-                // Public registration page uses
-                // public events API.
-
-                const response = await fetch(
-                    `${API_URL}/api/registrations/events`
-                );
+        const submitBtn =
+            document.getElementById("submit-btn");
 
 
-                const data =
-                    await response.json();
+        /*
+         * EVENT ID
+         *
+         * Your current database event:
+         * Coders Era Workshop = ID 1
+         */
+
+        const EVENT_ID = 1;
 
 
-                if (!response.ok) {
+        registrationForm.addEventListener(
+            "submit",
+            async function (event) {
 
-                    throw new Error(
-                        data.message ||
-                        "Failed to load events"
+                event.preventDefault();
+
+
+                message.className = "";
+                message.style.display = "none";
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Registering...";
+
+
+                const formData = {
+
+                    event_id: EVENT_ID,
+
+                    name:
+                        document.getElementById("name").value.trim(),
+
+                    email:
+                        document.getElementById("college_email").value.trim(),
+
+                    phone:
+                        document.getElementById("phone").value.trim(),
+
+                    roll_no:
+                        document.getElementById("roll_no").value.trim(),
+
+                    college_email:
+                        document.getElementById("college_email").value.trim(),
+
+                    host_institution:
+                        document.getElementById("host_institution").value.trim(),
+
+                    degree:
+                        document.getElementById("degree").value,
+
+                    branch:
+                        document.getElementById("branch").value.trim(),
+
+                    year_of_study:
+                        document.getElementById("year_of_study").value
+
+                };
+
+
+                try {
+
+                    const response = await fetch(
+                        `${API_URL}/api/registrations`,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+
+                            body: JSON.stringify(formData)
+                        }
                     );
-                }
 
 
-                eventSelect.innerHTML =
-                    '<option value="">Select an event</option>';
+                    const data =
+                        await response.json();
 
 
-                if (
-                    !data.events ||
-                    data.events.length === 0
-                ) {
+                    if (!response.ok) {
 
-                    eventSelect.innerHTML =
-                        '<option value="">No events available</option>';
-
-                    return;
-                }
-
-
-                data.events.forEach(event => {
-
-                    const option =
-                        document.createElement("option");
-
-
-                    option.value =
-                        event.id;
-
-
-                    option.textContent =
-                        event.title;
-
-
-                    eventSelect.appendChild(
-                        option
-                    );
-
-                });
-
-
-            } catch (error) {
-
-                console.error(
-                    "Load events error:",
-                    error
-                );
-
-
-                eventSelect.innerHTML =
-                    '<option value="">Unable to load events</option>';
-            }
-        }
-
-
-        // =====================================
-        // REGISTRATION
-        // =====================================
-
-        document
-            .getElementById("registration-form")
-            .addEventListener(
-                "submit",
-                async function (event) {
-
-                    event.preventDefault();
-
-
-                    const message =
-                        document.getElementById(
-                            "message"
+                        throw new Error(
+                            data.message ||
+                            "Registration failed"
                         );
 
-
-                    const registerButton =
-                        document.getElementById(
-                            "register-button"
-                        );
-
-
-                    const event_id =
-                        document.getElementById(
-                            "event_id"
-                        ).value;
-
-
-                    const name =
-                        document.getElementById(
-                            "name"
-                        ).value.trim();
-
-
-                    const email =
-                        document.getElementById(
-                            "email"
-                        ).value.trim();
-
-
-                    const phone =
-                        document.getElementById(
-                            "phone"
-                        ).value.trim();
-
-
-                    if (!event_id) {
-
-                        message.className =
-                            "error";
-
-                        message.textContent =
-                            "❌ Please select an event.";
-
-                        return;
                     }
 
 
-                    message.className =
-                        "success";
+                    /*
+                     * SUCCESS
+                     */
+
+                    message.className = "success";
+
+                    message.style.display = "block";
 
                     message.textContent =
-                        "⏳ Registering...";
-
-                    message.style.display =
-                        "block";
+                        "Registration successful! Redirecting to your ticket...";
 
 
-                    registerButton.disabled =
-                        true;
+                    /*
+                     * REDIRECT TO TICKET
+                     */
 
-                    registerButton.textContent =
-                        "Registering...";
+                    if (data.ticket_url) {
 
+                        setTimeout(() => {
 
-                    try {
+                            window.location.href =
+                                data.ticket_url;
 
-                        // =====================================
-                        // CREATE REGISTRATION
-                        // =====================================
+                        }, 1000);
 
-                        const response =
-                            await fetch(
-                                `${API_URL}/api/registrations`,
-                                {
-                                    method: "POST",
+                    } else if (
+                        data.ticket &&
+                        data.ticket.ticket_code
+                    ) {
 
-                                    headers: {
-                                        "Content-Type":
-                                            "application/json"
-                                    },
+                        setTimeout(() => {
 
-                                    body: JSON.stringify({
-                                        event_id,
-                                        name,
-                                        email,
-                                        phone
-                                    })
-                                }
-                            );
+                            window.location.href =
+                                `ticket.html?ticketCode=${encodeURIComponent(
+                                    data.ticket.ticket_code
+                                )}`;
 
+                        }, 1000);
 
-                        const data =
-                            await response.json();
-
-
-                        console.log(
-                            "Registration Response:",
-                            data
-                        );
-
-
-                        if (!response.ok) {
-
-                            throw new Error(
-                                data.message ||
-                                "Registration failed"
-                            );
-                        }
-
-
-                        // =====================================
-                        // SUCCESS
-                        // =====================================
-
-                        message.className =
-                            "success";
-
-
-                        message.innerHTML = `
-                            ✅ Registration Successful!
-                            <br><br>
-
-                            Registration ID:
-                            <strong>
-                                ${data.registration.registration_id}
-                            </strong>
-
-                            <br><br>
-
-                            Your ticket has been generated.
-                        `;
-
-
-                        // =====================================
-                        // REDIRECT TO TICKET
-                        // =====================================
-                        //
-                        // Your backend registration response
-                        // should contain ticket_code.
-                        //
-
-                        const ticketCode =
-                            data.ticket.ticket_code;
-
-                        if (ticketCode) {
-
-                            setTimeout(() => {
-
-                                window.location.href =
-                                    `ticket.html?ticketCode=${encodeURIComponent(
-                                        ticketCode
-                                    )}`;
-
-                            }, 1500);
-
-                        } else {
-
-                            console.warn(
-                                "Ticket code was not returned by backend."
-                            );
-
-                            document
-                                .getElementById(
-                                    "registration-form"
-                                )
-                                .reset();
-                        }
-
-
-                    } catch (error) {
-
-                        console.error(
-                            "Registration error:",
-                            error
-                        );
-
-
-                        message.className =
-                            "error";
-
-
-                        message.textContent =
-                            `❌ ${error.message}`;
-
-
-                    } finally {
-
-                        registerButton.disabled =
-                            false;
-
-                        registerButton.textContent =
-                            "Register for Event";
                     }
 
+
+                } catch (error) {
+
+                    console.error(
+                        "Registration Error:",
+                        error
+                    );
+
+
+                    message.className = "error";
+
+                    message.style.display = "block";
+
+                    message.textContent =
+                        error.message ||
+                        "Unable to complete registration.";
+
+
+                    submitBtn.disabled = false;
+
+                    submitBtn.textContent =
+                        "Register for Event";
+
                 }
-            );
 
-
-        // =====================================
-        // START
-        // =====================================
-
-        loadEvents();
+            }
+        );
 
     </script>
 
 </body>
-
 </html>

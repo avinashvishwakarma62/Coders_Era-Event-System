@@ -10,7 +10,9 @@ let allRegistrations = [];
 const adminToken = localStorage.getItem("adminToken");
 
 if (!adminToken) {
-    window.location.href = "admin_login.html";
+
+    window.location.href = "admin-login.html";
+
 }
 
 
@@ -19,7 +21,9 @@ if (!adminToken) {
 // =====================================
 
 async function loadEvents() {
+
     try {
+
         const response = await fetch(
             `${API_URL}/api/admin/events`,
             {
@@ -29,43 +33,69 @@ async function loadEvents() {
             }
         );
 
+
         const data = await response.json();
 
+
         if (!response.ok) {
+
             throw new Error(
                 data.message || "Failed to load events"
             );
+
         }
+
 
         const eventSelect =
             document.getElementById("event-select");
+
 
         if (!eventSelect) {
             return;
         }
 
+
         eventSelect.innerHTML = "";
 
-        if (!data.events || data.events.length === 0) {
+
+        if (
+            !data.events ||
+            data.events.length === 0
+        ) {
+
             eventSelect.innerHTML =
                 `<option value="">No events available</option>`;
 
             resetAttendance();
+
             return;
+
         }
+
 
         data.events.forEach(event => {
 
             const option =
                 document.createElement("option");
 
-            option.value = event.id;
-            option.textContent = event.title;
+
+            option.value =
+                event.id;
+
+
+            option.textContent =
+                event.title;
+
 
             eventSelect.appendChild(option);
+
         });
 
-        await loadAttendance(data.events[0].id);
+
+        await loadAttendance(
+            data.events[0].id
+        );
+
 
     } catch (error) {
 
@@ -74,19 +104,28 @@ async function loadEvents() {
             error
         );
 
+
         const eventSelect =
-            document.getElementById("event-select");
+            document.getElementById(
+                "event-select"
+            );
+
 
         if (eventSelect) {
+
             eventSelect.innerHTML =
                 `<option value="">Failed to load events</option>`;
+
         }
+
 
         showMessage(
             "Failed to load events",
             true
         );
+
     }
+
 }
 
 
@@ -100,6 +139,7 @@ async function loadAttendance(eventId) {
         return;
     }
 
+
     try {
 
         const response = await fetch(
@@ -111,39 +151,54 @@ async function loadAttendance(eventId) {
             }
         );
 
-        const data = await response.json();
+
+        const data =
+            await response.json();
+
 
         if (!response.ok) {
+
             throw new Error(
                 data.message ||
                 "Failed to load attendance"
             );
+
         }
+
 
         const attendance =
             data.attendance;
+
 
         document.getElementById(
             "total-registrations"
         ).textContent =
             attendance.totalRegistrations;
 
+
         document.getElementById(
             "checked-in"
         ).textContent =
             attendance.checkedIn;
+
 
         document.getElementById(
             "not-checked-in"
         ).textContent =
             attendance.notCheckedIn;
 
+
         document.getElementById(
             "attendance-percentage"
         ).textContent =
             attendance.attendancePercentage;
 
-        showMessage("", false);
+
+        showMessage(
+            "",
+            false
+        );
+
 
     } catch (error) {
 
@@ -152,11 +207,14 @@ async function loadAttendance(eventId) {
             error
         );
 
+
         showMessage(
             "Failed to load attendance",
             true
         );
+
     }
+
 }
 
 
@@ -170,17 +228,21 @@ function resetAttendance() {
         "total-registrations"
     ).textContent = "0";
 
+
     document.getElementById(
         "checked-in"
     ).textContent = "0";
+
 
     document.getElementById(
         "not-checked-in"
     ).textContent = "0";
 
+
     document.getElementById(
         "attendance-percentage"
     ).textContent = "0%";
+
 }
 
 
@@ -201,21 +263,29 @@ async function loadRegistrations() {
             }
         );
 
-        const data = await response.json();
+
+        const data =
+            await response.json();
+
 
         if (!response.ok) {
+
             throw new Error(
                 data.message ||
                 "Failed to load registrations"
             );
+
         }
+
 
         allRegistrations =
             data.registrations || [];
 
+
         renderRegistrations(
             allRegistrations
         );
+
 
     } catch (error) {
 
@@ -224,10 +294,12 @@ async function loadRegistrations() {
             error
         );
 
+
         const table =
             document.getElementById(
                 "registrations-table"
             );
+
 
         if (table) {
 
@@ -238,8 +310,11 @@ async function loadRegistrations() {
                     </td>
                 </tr>
             `;
+
         }
+
     }
+
 }
 
 
@@ -254,11 +329,14 @@ function renderRegistrations(registrations) {
             "registrations-table"
         );
 
+
     if (!table) {
         return;
     }
 
+
     table.innerHTML = "";
+
 
     if (
         !registrations ||
@@ -274,13 +352,16 @@ function renderRegistrations(registrations) {
         `;
 
         return;
+
     }
+
 
     registrations.forEach(
         registration => {
 
             const row =
                 document.createElement("tr");
+
 
             const registeredDate =
                 registration.registered_at
@@ -289,12 +370,14 @@ function renderRegistrations(registrations) {
                     ).toLocaleString("en-IN")
                     : "N/A";
 
+
             const checkedInTime =
                 registration.checked_in_at
                     ? new Date(
                         registration.checked_in_at
                     ).toLocaleString("en-IN")
                     : "—";
+
 
             const statusHTML =
                 registration.checked_in === true
@@ -308,6 +391,7 @@ function renderRegistrations(registrations) {
                             ❌ Not Checked In
                         </span>
                     `;
+
 
             row.innerHTML = `
 
@@ -363,11 +447,15 @@ function renderRegistrations(registrations) {
                         registeredDate
                     )}
                 </td>
+
             `;
 
+
             table.appendChild(row);
+
         }
     );
+
 }
 
 
@@ -382,10 +470,12 @@ function filterRegistrations() {
             "registration-search"
         );
 
+
     const statusFilter =
         document.getElementById(
             "status-filter"
         );
+
 
     const search =
         searchInput
@@ -394,10 +484,12 @@ function filterRegistrations() {
                 .trim()
             : "";
 
+
     const status =
         statusFilter
             ? statusFilter.value
             : "all";
+
 
     const filteredRegistrations =
         allRegistrations.filter(
@@ -451,28 +543,39 @@ function filterRegistrations() {
                         .toLowerCase()
                         .includes(search);
 
+
                 let matchesStatus = true;
 
+
                 if (status === "checked") {
+
                     matchesStatus =
                         registration.checked_in === true;
+
                 }
 
+
                 if (status === "not-checked") {
+
                     matchesStatus =
                         registration.checked_in === false;
+
                 }
+
 
                 return (
                     matchesSearch &&
                     matchesStatus
                 );
+
             }
         );
+
 
     renderRegistrations(
         filteredRegistrations
     );
+
 }
 
 
@@ -485,6 +588,7 @@ const eventSelect =
         "event-select"
     );
 
+
 if (eventSelect) {
 
     eventSelect.addEventListener(
@@ -494,11 +598,18 @@ if (eventSelect) {
             const eventId =
                 this.value;
 
+
             if (eventId) {
-                loadAttendance(eventId);
+
+                loadAttendance(
+                    eventId
+                );
+
             }
+
         }
     );
+
 }
 
 
@@ -511,12 +622,14 @@ const searchInput =
         "registration-search"
     );
 
+
 if (searchInput) {
 
     searchInput.addEventListener(
         "input",
         filterRegistrations
     );
+
 }
 
 
@@ -529,12 +642,14 @@ const statusFilter =
         "status-filter"
     );
 
+
 if (statusFilter) {
 
     statusFilter.addEventListener(
         "change",
         filterRegistrations
     );
+
 }
 
 
@@ -547,6 +662,7 @@ const refreshButton =
         "refresh-dashboard"
     );
 
+
 if (refreshButton) {
 
     refreshButton.addEventListener(
@@ -555,8 +671,10 @@ if (refreshButton) {
 
             refreshButton.disabled = true;
 
+
             refreshButton.textContent =
                 "⏳ Refreshing...";
+
 
             try {
 
@@ -564,6 +682,7 @@ if (refreshButton) {
                     loadEvents(),
                     loadRegistrations()
                 ]);
+
 
             } catch (error) {
 
@@ -576,12 +695,67 @@ if (refreshButton) {
 
                 refreshButton.disabled = false;
 
+
                 refreshButton.textContent =
                     "🔄 Refresh Dashboard";
+
             }
+
         }
     );
+
 }
+
+
+// =====================================
+// LOGOUT
+// =====================================
+
+function logoutAdmin() {
+
+    // Remove authentication data
+    localStorage.removeItem("adminToken");
+
+    // Remove old login flag
+    localStorage.removeItem("adminLoggedIn");
+
+    // Remove session data
+    sessionStorage.removeItem("adminToken");
+    sessionStorage.removeItem("adminLoggedIn");
+
+
+    // IMPORTANT:
+    // admin.html and admin-login.html
+    // are both inside /frontend/
+    window.location.href =
+        "admin-login.html";
+
+}
+
+
+// =====================================
+// CONNECT LOGOUT BUTTON
+// =====================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const logoutButton =
+            document.getElementById("logout-btn");
+
+
+        if (logoutButton) {
+
+            logoutButton.addEventListener(
+                "click",
+                logoutAdmin
+            );
+
+        }
+
+    }
+);
 
 
 // =====================================
@@ -598,19 +772,28 @@ function showMessage(
             "attendance-message"
         );
 
+
     if (!box) {
         return;
     }
 
+
     box.textContent =
         message;
+
 
     box.className =
         "message";
 
+
     if (isError) {
-        box.classList.add("error");
+
+        box.classList.add(
+            "error"
+        );
+
     }
+
 }
 
 
@@ -624,15 +807,34 @@ function escapeHTML(value) {
         value === null ||
         value === undefined
     ) {
+
         return "";
+
     }
 
+
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
 }
 
 

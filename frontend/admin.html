@@ -33,6 +33,22 @@
             align-items: center;
         }
 
+        .admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.admin-logo {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: #ffffff;
+    padding: 4px;
+    display: block;
+}
+
         .header h1 {
             margin: 0;
         }
@@ -295,15 +311,25 @@
          Header
     =============================== -->
 
-    <header class="header">
+<header class="header">
+
+    <div class="admin-brand">
+
+        <img
+            src="assets/Logo.jpeg"
+            alt="Coders Era Logo"
+            class="admin-logo"
+        >
 
         <div>
             <h1>CODERS ERA</h1>
             <p>Admin Dashboard</p>
         </div>
 
-        <button
-            id="logout-button"
+    </div>
+
+    <button
+        id="logout-button"
             class="logout-btn"
             type="button">
             Logout
@@ -520,7 +546,7 @@
         if (!adminToken) {
 
             window.location.href =
-                "admin_login.html";
+                "admin-login.html";
 
         }
 
@@ -586,7 +612,7 @@
                 );
 
                 window.location.href =
-                    "admin_login.html";
+                    "admin-login.html";
 
                 return null;
             }
@@ -1338,7 +1364,7 @@
 
 
                 window.location.href =
-                    "admin_login.html";
+                    "admin-login.html";
 
             }
         );

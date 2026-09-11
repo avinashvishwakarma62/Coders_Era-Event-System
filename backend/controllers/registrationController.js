@@ -7,12 +7,13 @@ const {
 
 const generateQRCode = require("../utils/qrGenerator");
 
-
 // =====================================
 // CREATE REGISTRATION
 // =====================================
 
 const createRegistration = async (req, res) => {
+
+    const client = await pool.connect();
 
     try {
 
@@ -20,29 +21,61 @@ const createRegistration = async (req, res) => {
             event_id,
             name,
             email,
-            phone
+            phone,
+            roll_no,
+            college_email,
+            host_institution,
+            degree,
+            branch,
+            year_of_study
         } = req.body;
 
 
         // =====================================
-        // Check Event
+        // VALIDATION
         // =====================================
 
-        const event = await pool.query(
+        if (
+            !event_id ||
+            !name ||
+            !email ||
+            !roll_no ||
+            !college_email ||
+            !phone ||
+            !host_institution ||
+            !degree ||
+            !branch ||
+            !year_of_study
+        ) {
+
+            return res.status(400).json({
+                message: "All registration fields are required"
+            });
+
+        }
+
+
+        // =====================================
+        // CHECK EVENT
+        // =====================================
+
+        const event = await client.query(
             "SELECT * FROM events WHERE id = $1",
             [event_id]
         );
+
 
         if (event.rows.length === 0) {
 
             return res.status(404).json({
                 message: "Event not found"
             });
+
         }
 
 
         // =====================================
-        // Check Registration Status
+        // CHECK REGISTRATION STATUS
         // =====================================
 
         if (!event.rows[0].registration_open) {
@@ -50,11 +83,19 @@ const createRegistration = async (req, res) => {
             return res.status(400).json({
                 message: "Registration is closed"
             });
+
         }
 
 
         // =====================================
-        // Generate Registration ID
+        // START TRANSACTION
+        // =====================================
+
+        await client.query("BEGIN");
+
+
+        // =====================================
+        // GENERATE REGISTRATION ID
         // =====================================
 
         const registrationId =
@@ -62,10 +103,10 @@ const createRegistration = async (req, res) => {
 
 
         // =====================================
-        // Save Registration
+        // SAVE REGISTRATION
         // =====================================
 
-        const result = await pool.query(
+        const result = await client.query(
 
             `INSERT INTO registrations
             (
@@ -73,18 +114,44 @@ const createRegistration = async (req, res) => {
                 name,
                 email,
                 phone,
-                registration_id
+                registration_id,
+                roll_no,
+                college_email,
+                host_institution,
+                degree,
+                branch,
+                year_of_study
             )
-            VALUES ($1, $2, $3, $4, $5)
+            VALUES
+            (
+                $1,
+                $2,
+                $3,
+                $4,
+                $5,
+                $6,
+                $7,
+                $8,
+                $9,
+                $10,
+                $11
+            )
             RETURNING *`,
 
             [
                 event_id,
                 name,
-                email,
+                email,              // ✅ FIXED
                 phone,
-                registrationId
+                registrationId,
+                roll_no,
+                college_email,
+                host_institution,
+                degree,
+                branch,
+                year_of_study
             ]
+
         );
 
 
@@ -93,7 +160,7 @@ const createRegistration = async (req, res) => {
 
 
         // =====================================
-        // Generate Ticket
+        // GENERATE TICKET CODE
         // =====================================
 
         const ticketCode =
@@ -101,7 +168,7 @@ const createRegistration = async (req, res) => {
 
 
         // =====================================
-        // Generate QR Code
+        // GENERATE QR CODE
         // =====================================
 
         const qrCode =
@@ -109,10 +176,23 @@ const createRegistration = async (req, res) => {
 
 
         // =====================================
-        // Save Ticket
+        // CHECK QR
         // =====================================
 
-        await pool.query(
+        if (!qrCode) {
+
+            throw new Error(
+                "QR code generation failed"
+            );
+
+        }
+
+
+        // =====================================
+        // SAVE TICKET
+        // =====================================
+
+        const ticketResult = await client.query(
 
             `INSERT INTO tickets
             (
@@ -120,14 +200,32 @@ const createRegistration = async (req, res) => {
                 ticket_code,
                 qr_data
             )
-            VALUES ($1, $2, $3)`,
+            VALUES
+            (
+                $1,
+                $2,
+                $3
+            )
+            RETURNING *`,
 
             [
                 registration.id,
                 ticketCode,
                 qrCode
             ]
+
         );
+
+
+        const ticket =
+            ticketResult.rows[0];
+
+
+        // =====================================
+        // COMMIT TRANSACTION
+        // =====================================
+
+        await client.query("COMMIT");
 
 
         // =====================================
@@ -142,23 +240,39 @@ const createRegistration = async (req, res) => {
 
             ticket: {
 
-                ticket_code: ticketCode,
+                id: ticket.id,
 
-                qr_data: qrCode
+                ticket_code: ticket.ticket_code,
+
+                qr_data: ticket.qr_data
 
             },
 
-            // Dynamic ticket page URL
             ticket_url:
                 `ticket.html?ticketCode=${encodeURIComponent(ticketCode)}`
+
         });
 
 
     } catch (error) {
 
+        // =====================================
+        // ROLLBACK
+        // =====================================
+
+        try {
+            await client.query("ROLLBACK");
+        } catch (rollbackError) {
+            console.error(
+                "Rollback error:",
+                rollbackError.message
+            );
+        }
+
+
         console.error(
             "Registration error:",
-            error.message
+            error
         );
 
 
@@ -170,6 +284,15 @@ const createRegistration = async (req, res) => {
 
         });
 
+
+    } finally {
+
+        // =====================================
+        // RELEASE DATABASE CONNECTION
+        // =====================================
+
+        client.release();
+
     }
 };
 
@@ -179,7 +302,5 @@ const createRegistration = async (req, res) => {
 // =====================================
 
 module.exports = {
-
     createRegistration
-
 };

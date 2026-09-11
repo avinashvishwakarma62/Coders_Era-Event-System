@@ -2,95 +2,322 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Digital Ticket | Coders Era</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="css/ticket.css">
+    <title>Coders Era - Event Ticket</title>
+
+    <link
+        rel="stylesheet"
+        href="css/ticket.css"
+    >
 </head>
 
 <body>
 
+    <!-- ============================= -->
+    <!-- TICKET PAGE -->
+    <!-- ============================= -->
+
     <div class="ticket-page">
 
-        <div class="ticket-card">
+        <!-- Loading message -->
+        <div id="loading" style="text-align:center; padding:20px;">
+            Loading ticket...
+        </div>
 
-            <!-- Header -->
+        <!-- Error message -->
+        <div
+            id="ticket-error"
+            style="
+                display:none;
+                text-align:center;
+                padding:20px;
+                color:#d93025;
+                font-weight:bold;
+            "
+        ></div>
+
+
+        <!-- ============================= -->
+        <!-- TICKET CONTAINER -->
+        <!-- ============================= -->
+
+        <div
+            class="ticket"
+            id="ticket-container"
+            style="display:none;"
+        >
+
+            <!-- ================= HEADER ================= -->
+
             <div class="ticket-header">
-                <h1>CODERS ERA</h1>
-                <p>Digital Event Ticket</p>
+
+                <div class="circuit circuit-left"></div>
+
+                <img
+                    src="assets/Logo.jpeg"
+                    alt="Coders Era Logo"
+                    class="ticket-logo"
+                >
+
+                <div class="ticket-badge">
+                    EVENT TICKET
+                </div>
+
+                <div class="circuit circuit-right"></div>
+
             </div>
 
-            <!-- Event -->
-            <div class="event-section">
-                <h2 id="event-title">Loading event...</h2>
-                <p id="event-description"></p>
+
+            <!-- ================= EVENT TITLE ================= -->
+
+            <div class="event-title">
+
+                <h1 id="event-title">
+                    Coders Era Workshop
+                </h1>
+
+                <p>
+                    Learn · Build · Grow Together
+                </p>
+
+                <div class="title-line"></div>
+
             </div>
 
-            <!-- Ticket Information -->
-            <div class="ticket-content">
 
-                <div class="participant-info">
+            <!-- ================= MAIN CONTENT ================= -->
 
-                    <div class="info-item">
-                        <span>Name</span>
-                        <strong id="participant-name">Loading...</strong>
+            <div class="ticket-main">
+
+
+                <!-- ================= PARTICIPANT DETAILS ================= -->
+
+                <div class="participant-card">
+
+                    <div class="section-title">
+
+                        <div class="section-icon">
+                            👤
+                        </div>
+
+                        <h2>
+                            Participant Details
+                        </h2>
+
                     </div>
 
-                    <div class="info-item">
-                        <span>Registration ID</span>
-                        <strong id="registration-id">Loading...</strong>
-                    </div>
 
-                    <div class="info-item">
-                        <span>Ticket Code</span>
-                        <strong id="ticket-code">Loading...</strong>
-                    </div>
+                    <div class="details">
 
-                    <div class="info-item">
-                        <span>Venue</span>
-                        <strong id="venue">Loading...</strong>
-                    </div>
+                        <div class="detail-row">
+                            <span>Name:</span>
+                            <strong id="participant-name">—</strong>
+                        </div>
 
-                    <div class="info-item">
-                        <span>Date</span>
-                        <strong id="event-date">Loading...</strong>
-                    </div>
+                        <div class="detail-row">
+                            <span>Roll Number:</span>
+                            <strong id="roll-number">—</strong>
+                        </div>
 
-                    <div class="info-item">
-                        <span>Time</span>
-                        <strong id="event-time">Loading...</strong>
+                        <div class="detail-row">
+                            <span>College Email:</span>
+                            <strong id="college-email">—</strong>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Phone Number:</span>
+                            <strong id="phone-number">—</strong>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Institution:</span>
+                            <strong id="host-institution">—</strong>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Degree:</span>
+                            <strong id="degree">—</strong>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Branch:</span>
+                            <strong id="branch">—</strong>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Year of Study:</span>
+                            <strong id="year-of-study">—</strong>
+                        </div>
+
                     </div>
 
                 </div>
 
-                <!-- QR Code -->
-                <div class="qr-section">
 
-                    <p>Scan to Verify</p>
+                <!-- ================= QR SECTION ================= -->
 
-                    <img
-                        id="qr-code"
-                        src=""
-                        alt="Ticket QR Code"
-                    >
+                <div class="qr-card">
 
-                    <small id="ticket-status">
-                        Valid Ticket
-                    </small>
+                    <div class="qr-header">
+                        YOUR QR CODE
+                    </div>
+
+
+                    <div class="qr-container">
+
+                        <img
+                            id="qr-code"
+                            src=""
+                            alt="Ticket QR Code"
+                        >
+
+                    </div>
+
+
+                    <div class="ticket-code-box">
+
+                        <span>
+                            Ticket Code
+                        </span>
+
+                        <strong id="ticket-code">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <p class="scan-text">
+                        Scan this QR code at the event for check-in
+                    </p>
 
                 </div>
 
             </div>
 
-            <!-- Footer -->
+
+            <!-- ================= EVENT DETAILS ================= -->
+
+            <div class="event-details-card">
+
+                <div class="section-title">
+
+                    <div class="section-icon">
+                        📅
+                    </div>
+
+                    <h2>
+                        Event Details
+                    </h2>
+
+                </div>
+
+
+                <div class="event-details-content">
+
+
+                    <div class="event-info">
+
+                        <div class="detail-row">
+                            <span>Event:</span>
+                            <strong id="event-name">
+                                Coders Era Workshop
+                            </strong>
+                        </div>
+
+
+                        <div class="detail-row">
+                            <span>Description:</span>
+                            <strong id="event-description">
+                                Technical workshop for students
+                            </strong>
+                        </div>
+
+
+                        <div class="detail-row">
+                            <span>Date:</span>
+                            <strong id="event-date">
+                                —
+                            </strong>
+                        </div>
+
+
+                        <div class="detail-row">
+                            <span>Time:</span>
+                            <strong id="event-time">
+                                —
+                            </strong>
+                        </div>
+
+
+                        <div class="detail-row">
+                            <span>Venue:</span>
+                            <strong id="event-venue">
+                                —
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUOTE -->
+
+                    <div class="quote-box">
+
+                        <strong>
+                            "Code Today<br>
+                            Create Tomorrow"
+                        </strong>
+
+                        <span>
+                            — Coders Era
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= FOOTER ================= -->
+
             <div class="ticket-footer">
-                <p>Please show this QR code at the event entrance.</p>
+
+                <div class="footer-line"></div>
+
+                <h3>
+                    Thank you for registering!
+                </h3>
+
+                <p>
+                    We look forward to seeing you at the event.
+                </p>
+
+                <small>
+                    © 2026 Coders Era. All rights reserved.
+                </small>
+
             </div>
+
+
+            <!-- ================= BLUE WAVE ================= -->
+
+            <div class="blue-wave"></div>
 
         </div>
 
     </div>
+
+
+    <!-- ============================= -->
+    <!-- TICKET JAVASCRIPT -->
+    <!-- ============================= -->
 
     <script src="js/ticket.js"></script>
 

@@ -9,7 +9,9 @@ const router = express.Router();
 
 router.get("/:ticketCode", async (req, res) => {
     try {
-        const ticketCode = decodeURIComponent(req.params.ticketCode).trim();
+        const ticketCode = decodeURIComponent(
+            req.params.ticketCode
+        ).trim();
 
         if (!ticketCode) {
             return res.status(400).json({
@@ -17,8 +19,13 @@ router.get("/:ticketCode", async (req, res) => {
             });
         }
 
+        // =====================================
+        // FETCH TICKET + REGISTRATION + EVENT
+        // =====================================
+
         const result = await pool.query(
-            `SELECT
+            `
+            SELECT
                 t.id AS ticket_id,
                 t.ticket_code,
                 t.qr_data,
@@ -27,9 +34,18 @@ router.get("/:ticketCode", async (req, res) => {
 
                 r.id AS registration_id,
                 r.registration_id AS registration_code,
+
                 r.name,
                 r.email,
                 r.phone,
+
+                r.roll_no,
+                r.college_email,
+                r.host_institution,
+                r.degree,
+                r.branch,
+                r.year_of_study,
+
                 r.registered_at,
 
                 e.id AS event_id,
@@ -40,20 +56,25 @@ router.get("/:ticketCode", async (req, res) => {
                 e.end_time,
                 e.venue
 
-             FROM tickets t
+            FROM tickets t
 
-             LEFT JOIN registrations r
+            LEFT JOIN registrations r
                 ON t.registration_id = r.id
 
-             LEFT JOIN events e
+            LEFT JOIN events e
                 ON r.event_id = e.id
 
-             WHERE LOWER(TRIM(t.ticket_code)) =
-                   LOWER(TRIM($1))
+            WHERE LOWER(TRIM(t.ticket_code)) =
+                  LOWER(TRIM($1))
 
-             LIMIT 1`,
+            LIMIT 1
+            `,
             [ticketCode]
         );
+
+        // =====================================
+        // TICKET NOT FOUND
+        // =====================================
 
         if (result.rows.length === 0) {
             return res.status(404).json({
@@ -62,13 +83,21 @@ router.get("/:ticketCode", async (req, res) => {
             });
         }
 
+        // =====================================
+        // SUCCESS
+        // =====================================
+
         res.status(200).json({
             message: "Ticket fetched successfully",
             ticket: result.rows[0]
         });
 
     } catch (error) {
-        console.error("Ticket API Error:", error.message);
+
+        console.error(
+            "Ticket API Error:",
+            error
+        );
 
         res.status(500).json({
             message: "Failed to fetch ticket",

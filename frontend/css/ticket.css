@@ -1,149 +1,564 @@
+/* =========================================
+   GLOBAL
+========================================= */
+
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    color: #222;
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #eef3f8;
+
+    color: #102a56;
 }
+
+
+/* =========================================
+   PAGE
+========================================= */
 
 .ticket-page {
     min-height: 100vh;
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
     padding: 30px 15px;
 }
 
-.ticket-card {
+
+/* =========================================
+   TICKET
+========================================= */
+
+.ticket {
     width: 100%;
-    max-width: 850px;
-    background: #ffffff;
-    border-radius: 18px;
+
+    max-width: 1100px;
+
+    background: white;
+
+    border-radius: 20px;
+
     overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+
+    position: relative;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.12);
+
+    border: 1px solid #dbe4ef;
+
+    padding: 30px;
 }
+
+
+/* =========================================
+   HEADER
+========================================= */
 
 .ticket-header {
-    background: #111827;
+    position: relative;
+
+    min-height: 150px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.ticket-logo {
+    width: 280px;
+
+    height: 150px;
+
+    object-fit: contain;
+
+    display: block;
+
+    border-radius: 5px;
+}
+
+
+/* =========================================
+   BADGE
+========================================= */
+
+.ticket-badge {
+    position: absolute;
+
+    right: 0;
+
+    top: 10px;
+
+    background: #1769e0;
+
     color: white;
-    padding: 28px 35px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    padding: 14px 28px;
+
+    border-radius: 12px;
+}
+
+
+/* =========================================
+   CIRCUIT DECORATION
+========================================= */
+
+.circuit {
+    position: absolute;
+
+    width: 180px;
+
+    height: 100px;
+
+    opacity: 0.45;
+}
+
+.circuit-left {
+    left: 0;
+    top: 20px;
+
+    border-top: 4px solid #55aaf5;
+
+    border-right: 4px solid #55aaf5;
+
+    border-radius: 0 40px 0 0;
+}
+
+.circuit-right {
+    right: 0;
+    bottom: 0;
+
+    border-bottom: 4px solid #55aaf5;
+
+    border-left: 4px solid #55aaf5;
+
+    border-radius: 0 0 0 40px;
+}
+
+
+/* =========================================
+   EVENT TITLE
+========================================= */
+
+.event-title {
     text-align: center;
+
+    margin-top: 5px;
+
+    margin-bottom: 30px;
 }
 
-.ticket-header h1 {
-    font-size: 32px;
-    letter-spacing: 2px;
+.event-title h1 {
+    margin: 0;
+
+    font-size: 38px;
+
+    color: #102a56;
 }
 
-.ticket-header p {
-    margin-top: 6px;
-    font-size: 15px;
-    opacity: 0.8;
+.event-title p {
+    margin: 8px 0;
+
+    color: #60758f;
+
+    font-size: 17px;
 }
 
-.event-section {
-    padding: 25px 35px;
-    border-bottom: 1px solid #e5e7eb;
+.title-line {
+    width: 120px;
+
+    height: 3px;
+
+    background: #1769e0;
+
+    margin: 12px auto;
 }
 
-.event-section h2 {
-    font-size: 26px;
-    margin-bottom: 8px;
-}
 
-.event-section p {
-    color: #6b7280;
-    line-height: 1.5;
-}
+/* =========================================
+   MAIN CONTENT
+========================================= */
 
-.ticket-content {
-    display: flex;
-    justify-content: space-between;
-    gap: 40px;
-    padding: 30px 35px;
-}
-
-.participant-info {
-    flex: 1;
+.ticket-main {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 22px;
+
+    grid-template-columns:
+        1fr 330px;
+
+    gap: 20px;
 }
 
-.info-item {
+
+/* =========================================
+   CARDS
+========================================= */
+
+.participant-card,
+.qr-card,
+.event-details-card {
+    border: 1px solid #dce5ef;
+
+    border-radius: 15px;
+
+    background: #f8fbff;
+}
+
+
+/* =========================================
+   PARTICIPANT
+========================================= */
+
+.participant-card {
+    padding: 25px;
+}
+
+
+/* =========================================
+   SECTION TITLE
+========================================= */
+
+.section-title {
     display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+}
+
+.section-title h2 {
+    margin: 0;
+
+    font-size: 23px;
+
+    color: #102a56;
+}
+
+
+.section-icon {
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: #1769e0;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 20px;
+}
+
+
+/* =========================================
+   DETAILS
+========================================= */
+
+.details {
+    display: flex;
+
     flex-direction: column;
-    gap: 6px;
+
+    gap: 12px;
 }
 
-.info-item span {
-    font-size: 13px;
-    color: #6b7280;
-}
 
-.info-item strong {
+.detail-row {
+    display: grid;
+
+    grid-template-columns: 145px 1fr;
+
+    gap: 10px;
+
     font-size: 15px;
+
+    line-height: 1.4;
+}
+
+.detail-row span {
+    color: #526987;
+
+    font-weight: 600;
+}
+
+.detail-row strong {
+    color: #102a56;
+
     word-break: break-word;
 }
 
-.qr-section {
-    width: 190px;
+
+/* =========================================
+   QR CARD
+========================================= */
+
+.qr-card {
+    background: white;
+
+    overflow: hidden;
+
     text-align: center;
-    padding-left: 25px;
-    border-left: 1px dashed #d1d5db;
 }
 
-.qr-section p {
-    font-size: 14px;
+
+.qr-header {
+    background: #1769e0;
+
+    color: white;
+
+    padding: 15px;
+
+    font-size: 18px;
+
     font-weight: bold;
-    margin-bottom: 12px;
 }
 
-.qr-section img {
-    width: 150px;
-    height: 150px;
+
+.qr-container {
+    padding: 20px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+
+.qr-container img {
+    width: 210px;
+
+    height: 210px;
+
     object-fit: contain;
+
     border: 8px solid white;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.08);
 }
 
-.qr-section small {
-    display: block;
-    margin-top: 10px;
-    color: #16a34a;
-    font-weight: bold;
+
+/* =========================================
+   TICKET CODE
+========================================= */
+
+.ticket-code-box {
+    margin: 0 20px;
+
+    padding: 12px;
+
+    background: #e5efff;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
 }
+
+
+.ticket-code-box span {
+    font-size: 13px;
+
+    color: #526987;
+}
+
+
+.ticket-code-box strong {
+    font-size: 22px;
+
+    color: #102a56;
+
+    letter-spacing: 1px;
+}
+
+
+.scan-text {
+    color: #526987;
+
+    font-size: 13px;
+
+    padding: 0 15px 15px;
+
+    margin: 10px 0 0;
+}
+
+
+/* =========================================
+   EVENT DETAILS
+========================================= */
+
+.event-details-card {
+    margin-top: 20px;
+
+    padding: 25px;
+}
+
+
+.event-details-content {
+    display: grid;
+
+    grid-template-columns: 1fr 280px;
+
+    gap: 30px;
+
+    align-items: center;
+}
+
+
+.event-info {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+/* =========================================
+   QUOTE
+========================================= */
+
+.quote-box {
+    background: #e7f0ff;
+
+    border-radius: 15px;
+
+    padding: 30px 20px;
+
+    text-align: center;
+
+    color: #102a56;
+}
+
+
+.quote-box strong {
+    font-size: 19px;
+
+    font-style: italic;
+
+    line-height: 1.6;
+}
+
+
+.quote-box span {
+    display: block;
+
+    margin-top: 12px;
+
+    color: #60758f;
+
+    font-size: 14px;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
 
 .ticket-footer {
-    padding: 18px 35px;
-    background: #f9fafb;
     text-align: center;
-    color: #6b7280;
-    font-size: 13px;
+
+    margin-top: 30px;
+
+    position: relative;
+
+    z-index: 2;
 }
 
-@media (max-width: 700px) {
-    .ticket-content {
-        flex-direction: column;
-    }
 
-    .participant-info {
-        grid-template-columns: 1fr;
-    }
+.footer-line {
+    border-top: 2px dashed #8bb9ef;
 
-    .qr-section {
-        width: 100%;
-        border-left: none;
-        border-top: 1px dashed #d1d5db;
-        padding-left: 0;
-        padding-top: 25px;
-    }
+    margin-bottom: 25px;
 }
+
+
+.ticket-footer h3 {
+    margin: 0;
+
+    font-size: 21px;
+
+    color: #102a56;
+}
+
+
+.ticket-footer p {
+    margin: 8px 0;
+
+    color: #60758f;
+
+    font-size: 15px;
+}
+
+
+.ticket-footer small {
+    color: #60758f;
+
+    font-size: 12px;
+}
+
+
+/* =========================================
+   BLUE WAVE
+========================================= */
+
+.blue-wave {
+    position: absolute;
+
+    bottom: -35px;
+
+    left: -5%;
+
+    width: 110%;
+
+    height: 80px;
+
+    background: #1769e0;
+
+    border-radius: 50% 50% 0 0;
+}
+
+
+/* =========================================
+   PRINT
+========================================= */
 
 @media print {
+
     body {
         background: white;
     }
@@ -152,7 +567,77 @@ body {
         padding: 0;
     }
 
-    .ticket-card {
+    .ticket {
+        max-width: none;
+
+        width: 100%;
+
         box-shadow: none;
+
+        border: none;
     }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 800px) {
+
+    .ticket {
+        padding: 20px;
+    }
+
+    .ticket-header {
+        min-height: 130px;
+    }
+
+    .ticket-logo {
+        width: 210px;
+
+        height: 120px;
+    }
+
+    .ticket-badge {
+        font-size: 12px;
+
+        padding: 10px 15px;
+
+        top: 0;
+    }
+
+    .event-title h1 {
+        font-size: 28px;
+    }
+
+    .ticket-main {
+        grid-template-columns: 1fr;
+    }
+
+    .event-details-content {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .detail-row {
+        grid-template-columns: 1fr;
+        gap: 3px;
+    }
+
+    .ticket-logo {
+        width: 180px;
+
+        height: 100px;
+    }
+
+    .ticket {
+        padding: 15px;
+    }
+
 }
