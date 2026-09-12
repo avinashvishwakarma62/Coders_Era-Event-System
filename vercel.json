@@ -1,51 +1,45 @@
 {
   "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "backend/api/index.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/backend/api/index.js"
+      "source": "/api/:path*",
+      "destination": "/api"
     },
     {
-      "src": "/",
-      "dest": "/frontend/index.html"
+      "source": "/",
+      "destination": "/frontend/index.html"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "/frontend/assets/$1"
+      "source": "/assets/:path*",
+      "destination": "/frontend/assets/:path*"
     },
     {
-      "src": "/css/(.*)",
-      "dest": "/frontend/css/$1"
+      "source": "/css/:path*",
+      "destination": "/frontend/css/:path*"
     },
     {
-      "src": "/js/(.*)",
-      "dest": "/frontend/js/$1"
+      "source": "/js/:path*",
+      "destination": "/frontend/js/:path*"
     },
     {
-      "src": "/admin.html",
-      "dest": "/frontend/admin.html"
+      "source": "/admin.html",
+      "destination": "/frontend/admin.html"
     },
     {
-      "src": "/admin-login.html",
-      "dest": "/frontend/admin-login.html"
+      "source": "/admin-login.html",
+      "destination": "/frontend/admin-login.html"
     },
     {
-      "src": "/registration.html",
-      "dest": "/frontend/registration.html"
+      "source": "/registration.html",
+      "destination": "/frontend/registration.html"
     },
     {
-      "src": "/scanner.html",
-      "dest": "/frontend/scanner.html"
+      "source": "/scanner.html",
+      "destination": "/frontend/scanner.html"
     },
     {
-      "src": "/ticket.html",
-      "dest": "/frontend/ticket.html"
+      "source": "/ticket.html",
+      "destination": "/frontend/ticket.html"
     }
   ]
 }
